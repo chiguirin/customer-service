@@ -4,10 +4,12 @@ import com.bank.customer.application.service.CustomerService;
 import com.bank.customer.infrastructure.controller.dto.CreateCustomerRequestDTO;
 import com.bank.customer.infrastructure.controller.dto.CustomerResponseDTO;
 import com.bank.customer.infrastructure.controller.dto.UpdateCustomerStatusRequestDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Customers", description = "Customer operations")
 @RestController
 @RequestMapping("/clientes")
 public class CustomerController {
