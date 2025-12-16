@@ -16,6 +16,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
     private String customerId;
     private String password;
     private Boolean active;
@@ -23,7 +27,7 @@ public class Customer {
     @OneToOne(optional = false)
     private Person person;
 
-    protected Customer() {
+    public Customer() {
     }
 
     public Customer(String customerId, String password, Person person) {
@@ -60,4 +64,6 @@ public class Customer {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
 }
