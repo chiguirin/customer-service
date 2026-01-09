@@ -10,6 +10,9 @@ public abstract class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @Version
+    protected Long version;
+
     protected String name;
     protected String gender;
     protected Integer age;
@@ -29,6 +32,10 @@ public abstract class Person {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     public String getName() {
