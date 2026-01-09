@@ -1,25 +1,25 @@
 package com.bank.customer.domain.model;
 
+
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "persons")
-public class Person {
+@MappedSuperclass
+public abstract class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String name;
-    private String gender;
-    private Integer age;
-    private String address;
-    private String phone;
+    protected String name;
+    protected String gender;
+    protected Integer age;
+    protected String address;
+    protected String phone;
 
     protected Person() {
     }
 
-    public Person(String name, String gender, Integer age, String address, String phone) {
+    protected Person(String name, String gender, Integer age, String address, String phone) {
         this.name = name;
         this.gender = gender;
         this.age = age;

@@ -1,12 +1,9 @@
 package com.bank.customer.application.usecase;
 
 
-
 import com.bank.customer.domain.event.CustomerCreatedEvent;
 import com.bank.customer.domain.model.Customer;
-import com.bank.customer.domain.model.Person;
 import com.bank.customer.domain.repository.CustomerRepository;
-import com.bank.customer.domain.repository.PersonRepository;
 import com.bank.customer.shared.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +16,11 @@ public class CreateCustomerUseCase {
     private static final Logger log = LoggerFactory.getLogger(CreateCustomerUseCase.class);
 
     private final CustomerRepository customerRepository;
-    private final PersonRepository personRepository;
     private final ApplicationEventPublisher eventPublisher;
 
     public CreateCustomerUseCase(CustomerRepository customerRepository,
-                                 PersonRepository personRepository,
                                  ApplicationEventPublisher eventPublisher) {
         this.customerRepository = customerRepository;
-        this.personRepository = personRepository;
         this.eventPublisher = eventPublisher;
     }
 
@@ -40,20 +34,24 @@ public class CreateCustomerUseCase {
 
         customerRepository.findByCustomerId(customerId)
                 .ifPresent(c -> {
-                    log.warn("Customer already exist with id {}", customerId);
-                    throw new BusinessException("Customer already exist");
+                    log.warn("Customer already exists with id {}", customerId);
+                    throw new BusinessException("Customer already exists");
                 });
 
-        Person person = personRepository.save(
-                new Person(name, gender, age, address, phone)
+        Customer customer = new Customer(
+                customerId,
+                password,
+                name,
+                gender,
+                age,
+                address,
+                phone
         );
 
-        customerRepository.save(
-                new Customer(customerId, password, person)
-        );
+        customerRepository.save(customer);
 
         eventPublisher.publishEvent(new CustomerCreatedEvent(customerId));
 
-        log.info("Customer was created sucessfuly and event was published");
+        log.info("Customer was created successfully and event was published");
     }
 }

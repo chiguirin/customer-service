@@ -33,10 +33,16 @@ class UpdateCustomerStatusUseCaseTest {
     @Test
     void testExecute() {
         // Arrange
-        Customer customer = new Customer();
+        Customer customer = new Customer(
+                "42",
+                "iloveyou",
+                "Jair Castillo",
+                "M",
+                33,
+                "Calle Fake 123",
+                "3204584846"
+        );
         customer.setActive(true);
-        customer.setCustomerId("42");
-        customer.setPassword("iloveyou");
         Optional<Customer> ofResult = Optional.of(customer);
         when(customerRepository.findByCustomerId(Mockito.<String>any())).thenReturn(ofResult);
 

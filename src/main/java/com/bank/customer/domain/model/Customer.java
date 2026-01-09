@@ -1,44 +1,35 @@
 package com.bank.customer.domain.model;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer extends Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
+    @Column(unique = true, nullable = false)
     private String customerId;
+
     private String password;
     private Boolean active;
 
-    @OneToOne(optional = false)
-    private Person person;
-
-    public Customer() {
+    protected Customer() {
     }
 
-    public Customer(String customerId, String password, Person person) {
+    public Customer(String customerId,
+                    String password,
+                    String name,
+                    String gender,
+                    Integer age,
+                    String address,
+                    String phone) {
+
+        super(name, gender, age, address, phone);
         this.customerId = customerId;
         this.password = password;
-        this.person = person;
         this.active = Boolean.TRUE;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getCustomerId() {
@@ -49,21 +40,11 @@ public class Customer {
         return active;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-
 }
